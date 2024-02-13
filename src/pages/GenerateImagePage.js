@@ -1,4 +1,4 @@
-import {   useState } from "react";
+import { useState } from "react";
 import { Configuration, OpenAIApi } from "openai";
 import { InputBox } from "../Components/InputBox";
 import GenerateImageHeading from "../Components/GenerateImageHeading";
@@ -7,7 +7,7 @@ import GenerateButton from "../Components/GenerateButton";
 import ImageContainer from "../Components/ImageContainer";
 
 const configuration = new Configuration({
-  apiKey: process.env.REACT_APP_API_KEY,
+  apiKey: "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",
 });
 const openai = new OpenAIApi(configuration);
 
@@ -19,8 +19,8 @@ function GenerateImagePage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isError, setIsError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-  
-  const size = "256x256"
+
+  const size = "256x256";
   const generateImage = async () => {
     try {
       setIsLoading(true);
@@ -31,8 +31,11 @@ function GenerateImagePage() {
         n: 1,
         size: size,
       };
+
       const response = await openai.createImage(imageParameters);
       const urlData = response.data.data[0].url;
+
+      console.log(urlData);
       setImageUrl(urlData);
 
       setIsLoading(false);
@@ -79,7 +82,6 @@ function GenerateImagePage() {
       >
         <InputBox label={""} setAttribute={setUserPrompt} />
 
- 
         <GenerateButton
           isLoading={isLoading}
           handleImageGeneration={handleImageGeneration}
